@@ -1,0 +1,192 @@
+{{- /*
+Bootstrap admin password delivery. A pinned password is injected as an env var
+(the same channel as --bootstrap-password), so the server treats it as
+operator-chosen — no forced first-login change, no retrieval guide. An
+auto-generated password is mounted as a shared file so every replica surfaces
+the same first-login retrieval guide regardless of round-robin routing.
+*/ -}}
+{{- $bootstrapPinned := and .Values.server.bootstrapPasswordSecret.enabled .Values.server.bootstrapPasswordSecret.password -}}
+{{- $bootstrapFile := and .Values.server.bootstrapPasswordSecret.enabled (not .Values.server.bootstrapPasswordSecret.password) -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "chart_labels" . | indent 4 }}
+spec:
+  serviceName: {{ .Release.Name }}-server
+  replicas: {{ .Values.server.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-server
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-server
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.server.metricsPort }}"
+        prometheus.io/path: "/metrics"
+    spec:
+      # Disable Kubernetes service-link env injection. Kubernetes injects a
+      # <SVCNAME>_PORT=tcp://... env var (name uppercased, '-' -> '_') for every
+      # Service in the namespace; a AISTACK_-prefixed name would collide with
+      # AiStack's AISTACK_-prefixed config defaults and crash-loop prerun
+      # (e.g. a worker Service named aistack-worker -> AISTACK_WORKER_PORT).
+      # AiStack sets every env it needs explicitly and resolves peers via DNS,
+      # so it never relies on these link vars. KUBERNETES_SERVICE_HOST and
+      # KUBERNETES_SERVICE_PORT are exempt from this flag and keep working.
+      enableServiceLinks: false
+      {{- with (include "image_pull_secrets" . | trim) }}
+      {{- nindent 6 . }}
+      {{- end }}
+      containers:
+        - env:
+            - name: AISTACK_SERVER_ID
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: AISTACK_GATEWAY_PLUGIN_SERVER_URL
+              value: "http://{{ printf "%s-higress-plugins.%s.svc.%s:8080" .Release.Name .Release.Namespace .Values.clusterDomain }}"
+            - name: AISTACK_GATEWAY_INGRESS_CLASS
+              value: "{{ .Values.gateway.ingressClassname }}"
+            - name: AISTACK_GATEWAY_MIRROR_INGRESS_NAME
+              value: "{{ .Release.Name }}"
+            - name: AISTACK_GATEWAY_MODE
+              value: incluster
+            {{- if index .Values "higress-core" "enabled" }}
+            - name: AISTACK_GATEWAY_NAMESPACE
+              value: "{{ .Release.Namespace }}"
+            {{- end }}
+            - name: AISTACK_DEFAULT_CLUSTER_KUBERNETES
+              value: 'true'
+            - name: AISTACK_DISABLE_WORKER
+              value: 'true'
+            - name: AISTACK_SERVICE_DISCOVERY_NAME
+              value: "{{ .Release.Name }}-server-cluster-ip"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: AISTACK_SYSTEM_DEFAULT_CONTAINER_REGISTRY
+              value: {{ include "aistack.hub" . }}
+            - name: AISTACK_IMAGE_NAME_OVERRIDE
+              value: {{ include "aistack.image" . }}:{{ include "aistack.imageTag" . }}
+            {{- if $bootstrapPinned }}
+            - name: AISTACK_BOOTSTRAP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-server-bootstrap-password
+                  key: password
+            {{- end }}
+          envFrom:
+            {{- if .Values.worker.enabled }}
+            - secretRef:
+                name: registration-token
+                optional: false
+            {{- end }}
+            - secretRef:
+                name: {{ .Release.Name }}-jwt-key
+                optional: false
+            - configMapRef:
+                name: server-config
+                optional: true
+          ports:
+            - containerPort: {{ .Values.server.apiPort }}
+              name: http
+              protocol: TCP
+            - containerPort: {{ .Values.server.metricsPort }}
+              name: metrics
+              protocol: TCP
+          {{- with .Values.server.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.server.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.server.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: {{ include "aistack.image" . }}:{{ include "aistack.imageTag" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: {{ .Release.Name }}-server
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/lib/aistack
+              name: aistack-data-dir
+            {{- if $bootstrapFile }}
+            # Machine-generated shared initial admin password, mounted so every
+            # replica shows the same first-login retrieval guide regardless of
+            # round-robin routing.
+            - mountPath: /var/lib/aistack/initial_admin_password
+              name: bootstrap-password
+              subPath: password
+              readOnly: true
+            {{- end }}
+            {{- with .Values.server.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccountName: {{ .Release.Name }}-server
+      terminationGracePeriodSeconds: 30
+      {{- with (include "aistack.serverNodeSelector" . | trim) }}
+      nodeSelector:
+        {{- nindent 8 . }}
+      {{- end }}
+      {{- with .Values.server.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- else }}
+      {{- if gt (int (.Values.server.replicas | default 1)) 1 }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: {{ .Release.Name }}-server
+      {{- end }}
+      {{- end }}
+      {{- if or $bootstrapFile .Values.server.dataVolume.hostPath .Values.server.extraVolumes }}
+      volumes:
+        {{- if $bootstrapFile }}
+        - name: bootstrap-password
+          secret:
+            secretName: {{ .Release.Name }}-server-bootstrap-password
+        {{- end }}
+        {{- if .Values.server.dataVolume.hostPath }}
+        - name: aistack-data-dir
+          hostPath:
+            path: {{ .Values.server.dataVolume.hostPath }}
+            type: DirectoryOrCreate
+        {{- end }}
+        {{- with .Values.server.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+  {{- if not .Values.server.dataVolume.hostPath }}
+  volumeClaimTemplates:
+    - metadata:
+        name: aistack-data-dir
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.server.dataVolume.size | default "10Gi" }}
+  {{- end }}

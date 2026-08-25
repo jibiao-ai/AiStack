@@ -1,0 +1,23 @@
+apiVersion: v2
+name: aistack-chart
+version: 0.1.0
+description: A Helm chart for aistack
+appVersion: "2.2.0"
+keywords:
+  - ai
+  - gpu
+  - stack
+home: https://github.com/aistack/aistack
+sources:
+  - https://github.com/aistack/aistack
+icon: https://docs.aistack.ai/2.0/assets/logo.png
+kubeVersion: ">=1.30.0-0"
+annotations:
+  artifacthub.io/links: |
+    - name: GitHub
+      url: https://github.com/aistack/aistack
+dependencies:
+  - name: higress-core
+    version: "2.1.9"
+    repository: "https://higress.io/helm-charts"
+    condition: higress-core.enabled

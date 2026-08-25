@@ -1,0 +1,12 @@
+services:
+  aistack-server:
+    image: ${IMAGE_REGISTRY:-docker.io}/${IMAGE_NAMESPACE:-aistack}/aistack:${AISTACK_TAG:-latest}
+    container_name: aistack-server
+    restart: unless-stopped
+    volumes:
+      - aistack-data:/var/lib/aistack
+    ports:
+      - "80:80"
+
+volumes:
+  aistack-data: {}
