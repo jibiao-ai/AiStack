@@ -37,9 +37,15 @@ AiStack 帮助开发团队、IT 部门和服务提供商大规模交付"模型�
 
 单台 AiStack Server 可统一管理跨本地和云端的多个 GPU 集群。AiStack 调度器智能分配 GPU 资源以最大化利用率，并为不同模型自动选择最优推理引擎。管理员可通过集成的 Grafana 和 Prometheus 仪表板全面掌握系统健康状态和运行指标。
 
+![aistack-v2-architecture](docs/assets/aistack-v2-architecture.png)
+
 ## 推理性能优化
 
-AiStack 的自动化引擎选择与参数调优机制，可开箱即用地提供卓越的推理性能。系统针对每种模型与硬件组合自动优化配置，相比推理引擎默认设置可获得显著的吞吐量提升。
+AiStack 的自动化引擎选择与参数调优机制，可开箱即用地提供卓越的推理性能。下图展示了相比 vLLM 默认配置的吞吐量提升效果：
+
+![h200-throughput-comparison](docs/assets/h200-throughput-comparison.png)
+
+详细的基准测试方法和结果请访问 [推理性能实验室](https://docs.aistack.ai/latest/performance-lab/overview/)。
 
 ## 支持的加速器
 
@@ -120,10 +126,20 @@ sudo docker exec aistack cat /var/lib/aistack/initial_admin_password
 ### 部署模型
 
 1. 在 AiStack 管理界面中导航至 `模型目录（Catalog）` 页面。
-2. 从可用模型列表中选择所需模型（例如 `Qwen3.5-0.8B`）。
+
+2. 从可用模型列表中选择 `Qwen3.5-0.8B` 模型。
+
+![从目录部署 qwen3](docs/assets/quick-start/quick-start-qwen3.png)
+
 3. 部署兼容性检查通过后，点击 `保存` 按钮开始部署。
+
 4. AiStack 将自动下载模型文件并完成部署。当部署状态显示为 `Running` 时，表示模型已成功运行。
-5. 点击导航菜单中的 `Playground - Chat`，即可在可视化界面中与已部署模型进行对话测试。
+
+![模型运行中](docs/assets/quick-start/model-running.png)
+
+5. 点击导航菜单中的 `Playground - Chat`，在右上角 `Model` 下拉框中确认已选择 `qwen3.5-0.8b` 模型，即可在可视化界面中与已部署模型进行对话测试。
+
+![快速聊天](docs/assets/quick-start/quick-chat.png)
 
 ### 通过 API 使用模型
 

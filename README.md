@@ -37,9 +37,15 @@ AiStack enables development teams, IT organizations, and service providers to de
 
 A single AiStack server can manage multiple GPU clusters across both on-premises and cloud environments. The AiStack scheduler allocates GPUs to maximize resource utilization and selects the appropriate inference engines for optimal performance. Administrators gain full visibility into system health and metrics through integrated Grafana and Prometheus dashboards.
 
+![aistack-v2-architecture](docs/assets/aistack-v2-architecture.png)
+
 ## Optimized Inference Performance
 
-AiStack's automated engine selection and parameter optimization deliver strong inference performance out of the box. The system automatically tunes configurations for each model and hardware combination, delivering significant throughput improvements over default engine settings.
+AiStack's automated engine selection and parameter optimization deliver strong inference performance out of the box. The following figure shows throughput improvements over default vLLM configurations:
+
+![h200-throughput-comparison](docs/assets/h200-throughput-comparison.png)
+
+For detailed benchmarking methods and results, visit our [Inference Performance Lab](https://docs.aistack.ai/latest/performance-lab/overview/).
 
 ## Supported Accelerators
 
@@ -120,10 +126,20 @@ Open your browser and navigate to `http://your_host_ip` to access the AiStack UI
 ### Deploy a Model
 
 1. Navigate to the `Catalog` page in the AiStack UI.
-2. Select a model from the list of available models (e.g., `Qwen3.5-0.8B`).
+
+2. Select the `Qwen3.5-0.8B` model from the list of available models.
+
+![deploy qwen3 from catalog](docs/assets/quick-start/quick-start-qwen3.png)
+
 3. After the deployment compatibility checks pass, click the `Save` button to deploy the model.
+
 4. AiStack will start downloading the model files and deploying the model. When the deployment status shows `Running`, the model has been deployed successfully.
-5. Click `Playground - Chat` in the navigation menu to interact with the deployed model in the UI playground.
+
+![model is running](docs/assets/quick-start/model-running.png)
+
+5. Click `Playground - Chat` in the navigation menu, check that the model `qwen3.5-0.8b` is selected from the top-right `Model` dropdown. Now you can chat with the model in the UI playground.
+
+![quick chat](docs/assets/quick-start/quick-chat.png)
 
 ### Use the Model via API
 
