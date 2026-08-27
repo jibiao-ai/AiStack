@@ -15,13 +15,13 @@ from typing import Dict, Optional, Set, List, Callable
 from pathlib import Path
 import logging
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     get_workload,
     WorkloadStatusStateEnum,
     delete_workload,
     logs_workload,
 )
-from aistack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.deployer.__utils__ import compare_versions
 
 from aistack import envs
 from aistack.api.exceptions import NotFoundException

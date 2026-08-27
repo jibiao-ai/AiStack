@@ -36,7 +36,7 @@ from typing import Any, AsyncGenerator, AsyncIterator, Dict, List, Optional, Tup
 
 import httpx
 from pydantic import BaseModel, Field, field_validator
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 
 from aistack.config.config import get_global_config
 from aistack.schemas.clusters import Volume

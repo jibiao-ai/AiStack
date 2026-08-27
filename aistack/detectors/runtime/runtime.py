@@ -1,5 +1,5 @@
-from aistack_runtime.deployer import supported_list as supported_deployers
-from aistack_runtime.detector import (
+from gpustack_runtime.deployer import supported_list as supported_deployers
+from gpustack_runtime.detector import (
     detect_devices,
     expand_mig_devices,
     manufacturer_to_backend,

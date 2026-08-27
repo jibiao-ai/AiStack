@@ -24,7 +24,7 @@ from aistack.worker.cache_service_manager import (
     MAX_CONSECUTIVE_RESTARTS,
     CacheServiceManager,
 )
-from aistack_runtime.deployer import WorkloadStatusStateEnum
+from gpustack_runtime.deployer import WorkloadStatusStateEnum
 
 
 def _build_manager(worker_id: int = 1):

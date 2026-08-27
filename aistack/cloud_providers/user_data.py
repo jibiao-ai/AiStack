@@ -2,7 +2,7 @@
 import jinja2
 from typing import Dict, Optional, Any, List
 import yaml
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 
 # default_user_data_template is assuming the NVIDIA drivers and container toolkit
 # are pre-installed on the base image

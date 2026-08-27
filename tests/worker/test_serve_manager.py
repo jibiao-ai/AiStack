@@ -13,7 +13,7 @@ from aistack.schemas.models import (
 )
 from aistack.server.bus import Event, EventType
 from aistack.worker.serve_manager import ServeManager, _describe_workload_failure
-from aistack_runtime.deployer import WorkloadStatusStateEnum
+from gpustack_runtime.deployer import WorkloadStatusStateEnum
 from tests.utils.model import new_model, new_model_instance
 
 

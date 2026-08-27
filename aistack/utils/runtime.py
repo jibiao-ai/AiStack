@@ -1,10 +1,10 @@
 from typing import Optional, Union
-from aistack_runtime.envs import (
+from gpustack_runtime.envs import (
     AISTACK_RUNTIME_DOCKER_PAUSE_IMAGE,
     AISTACK_RUNTIME_DOCKER_UNHEALTHY_RESTART_IMAGE,
 )
-from aistack_runtime.deployer.docker import DockerWorkloadPlan
-from aistack_runtime.deployer import WorkloadPlan, DockerDeployer, WorkloadStatus
+from gpustack_runtime.deployer.docker import DockerWorkloadPlan
+from gpustack_runtime.deployer import WorkloadPlan, DockerDeployer, WorkloadStatus
 
 from aistack.config.config import Config
 from aistack.schemas.cache_services import CACHE_SERVICE_WORKLOAD_TYPE

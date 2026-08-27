@@ -12,7 +12,7 @@ import httpx
 import hmac
 import hashlib
 
-from aistack_runtime.detector import (
+from gpustack_runtime.detector import (
     manufacturer_to_backend,
     available_manufacturers,
     available_backends,

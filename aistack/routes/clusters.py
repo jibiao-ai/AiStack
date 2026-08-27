@@ -88,7 +88,7 @@ from aistack.config.config import (
     get_cluster_image_name,
 )
 from aistack.utils.grafana import resolve_grafana_base_url
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 
 CLUSTER_LOAD_OPTIONS = [
     selectinload(Cluster.cluster_workers),

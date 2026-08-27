@@ -14,6 +14,10 @@ PACKAGE_TAG=${PACKAGE_TAG:-dev}
 PACKAGE_WITH_CACHE=${PACKAGE_WITH_CACHE:-true}
 PACKAGE_PUSH=${PACKAGE_PUSH:-false}
 PACKAGE_UI_DOWNLOAD=${PACKAGE_UI_DOWNLOAD:-true}
+# Upstream image namespace for build-stage FROM dependencies.
+# Default: gpustack (uses Docker Hub gpustack/* images that actually exist).
+# Override with UPSTREAM_NS=aistack once you publish your own base images.
+UPSTREAM_NS=${UPSTREAM_NS:-gpustack}
 
 function pack() {
     if ! command -v docker &>/dev/null; then
@@ -44,7 +48,7 @@ function pack() {
     TAG="${PACKAGE_NAMESPACE}/${PACKAGE_REPOSITORY}:${PACKAGE_TAG}"
     EXTRA_ARGS=()
 	if [[ "${PACKAGE_WITH_CACHE}" == "true" ]]; then
-		EXTRA_ARGS+=("--cache-from=type=registry,ref=aistack/build-cache:aistack-main")
+		EXTRA_ARGS+=("--cache-from=type=registry,ref=gpustack/build-cache:gpustack-main")
 	fi
 	if [[ "${PACKAGE_PUSH}" == "true" ]]; then
 		EXTRA_ARGS+=("--push")
@@ -65,6 +69,7 @@ function pack() {
         --ulimit nofile=65536:65536 \
         --shm-size 16G \
         --progress plain \
+        --build-arg "UPSTREAM_NS=${UPSTREAM_NS}" \
         --build-arg "AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS=$(printf "%s;" "${LABELS[@]}")" \
         --build-arg "UI_DOWNLOAD=${PACKAGE_UI_DOWNLOAD}" \
         "${EXTRA_ARGS[@]}" \

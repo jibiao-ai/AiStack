@@ -12,7 +12,7 @@ from .abstract import (
 from pydo.aio import Client
 from aistack.schemas.clusters import Volume
 from aistack.cloud_providers.user_data import UserDataTemplate
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 
 logger = logging.getLogger(__name__)
 

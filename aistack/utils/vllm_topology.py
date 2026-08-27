@@ -2,7 +2,7 @@
 
 Lives in ``utils`` (not in ``worker.backends``) so scheduler / policies code
 can import these helpers without dragging in worker-only dependencies such as
-``aistack_runtime.deployer``. Anything that needs a specific node's identity
+``gpustack_runtime.deployer``. Anything that needs a specific node's identity
 (``ModelInstance`` / ``ModelInstanceDeploymentMetadata``) stays on the worker
 side — see ``aistack.worker.backends.vllm.cal_multinode_topology``.
 """

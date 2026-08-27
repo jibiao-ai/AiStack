@@ -8,7 +8,7 @@ from typing import Dict, NamedTuple, Optional, Callable, List, Set, Tuple
 import logging
 from collections import Counter, deque
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     delete_workload,
     get_workload,
     WorkloadStatusStateEnum,
@@ -32,7 +32,7 @@ from aistack.worker.schemas.benchmark_runner import (
     GenerativeBenchmarksReport,
     GenerativeRequestStats,
 )
-from aistack_runtime.deployer import logs_workload
+from gpustack_runtime.deployer import logs_workload
 
 logger = logging.getLogger(__name__)
 

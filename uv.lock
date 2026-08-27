@@ -1147,9 +1147,9 @@ dependencies = [
     { name = "dataclasses-json" },
     { name = "fastapi" },
     { name = "fastapi-cdn-host" },
-    { name = "aistack-higress-plugins" },
-    { name = "aistack-runner" },
-    { name = "aistack-runtime" },
+    { name = "gpustack-higress-plugins" },
+    { name = "gpustack-runner" },
+    { name = "gpustack-runtime" },
     { name = "hf-xet" },
     { name = "httpx", extra = ["socks"] },
     { name = "huggingface-hub" },
@@ -1239,9 +1239,9 @@ requires-dist = [
     { name = "dataclasses-json", specifier = ">=0.6.7" },
     { name = "fastapi", specifier = ">=0.115.0,<0.137.0" },
     { name = "fastapi-cdn-host", specifier = ">=0.8.0" },
-    { name = "aistack-higress-plugins", specifier = "==0.3.0.post7" },
-    { name = "aistack-runner", specifier = "==0.1.27.post4" },
-    { name = "aistack-runtime", specifier = "==0.2.3.post2" },
+    { name = "gpustack-higress-plugins", specifier = "==0.3.0.post7" },
+    { name = "gpustack-runner", specifier = "==0.1.27.post4" },
+    { name = "gpustack-runtime", specifier = "==0.2.3.post2" },
     { name = "hf-xet", specifier = ">=1.3.1,<2.0.0" },
     { name = "httpx", extras = ["socks"], specifier = ">=0.27.0" },
     { name = "huggingface-hub", specifier = ">=1.0.0" },
@@ -1308,7 +1308,7 @@ dev = [
 ]
 
 [[package]]
-name = "aistack-higress-plugins"
+name = "gpustack-higress-plugins"
 version = "0.3.0.post7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
@@ -1321,7 +1321,7 @@ wheels = [
 ]
 
 [[package]]
-name = "aistack-runner"
+name = "gpustack-runner"
 version = "0.1.27.post4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
@@ -1336,14 +1336,14 @@ wheels = [
 ]
 
 [[package]]
-name = "aistack-runtime"
+name = "gpustack-runtime"
 version = "0.2.3.post2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "argcomplete" },
     { name = "cachetools" },
     { name = "docker" },
-    { name = "aistack-runner" },
+    { name = "gpustack-runner" },
     { name = "kubernetes" },
     { name = "mthreads-ml-py" },
     { name = "nvidia-ml-py" },

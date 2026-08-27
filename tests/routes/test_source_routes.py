@@ -17,7 +17,7 @@ import httpx
 import pytest
 import pytest_asyncio
 import yaml
-from aistack_runner.runner import Runner
+from gpustack_runner.runner import Runner
 from pydantic import ValidationError
 from sqlalchemy import event as sa_event, select
 from sqlalchemy.ext.asyncio import create_async_engine

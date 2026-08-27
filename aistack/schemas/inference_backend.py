@@ -4,7 +4,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple
 
-from aistack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.deployer.__utils__ import compare_versions
 from pydantic import BaseModel, Field, RootModel
 from sqlalchemy import JSON, Column, ForeignKey, Integer, Text, UniqueConstraint
 from sqlmodel import SQLModel, Field as SQLField

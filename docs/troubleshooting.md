@@ -69,7 +69,7 @@ if the Worker fails to detect any devices,
 please enter the corresponding Worker container, run the following command, and report the results to [AiStack](https://github.com/aistack/aistack/issues).
 
 ```bash
-time AISTACK_RUNTIME_LOG_LEVEL=debug AISTACK_RUNTIME_LOG_EXCEPTION=1 aistack-runtime detect --format json
+time AISTACK_RUNTIME_LOG_LEVEL=debug AISTACK_RUNTIME_LOG_EXCEPTION=1 gpustack-runtime detect --format json
 ```
 
 ## Assist in Model Deployment Diagnosis
@@ -78,5 +78,5 @@ If you experience issues after deploying a model,
 please enter the corresponding Worker container, run the following command, and report the results to [AiStack](https://github.com/aistack/aistack/issues).
 
 ```bash
-aistack-runtime inspect <model instance name>
+gpustack-runtime inspect <model instance name>
 ```

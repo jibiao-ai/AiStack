@@ -4,7 +4,7 @@ from typing import List, Set, Tuple, Optional, Dict
 
 import yaml
 from fastapi import APIRouter, Body
-from aistack_runner.runner import ServiceVersionedRunner
+from gpustack_runner.runner import ServiceVersionedRunner
 from pydantic import ValidationError
 from sqlmodel.ext.asyncio.session import AsyncSession
 from starlette.responses import StreamingResponse
@@ -61,8 +61,8 @@ from aistack.server.db import async_session
 from aistack.server.deps import ListParamsDep, SessionDep, TenantContextDep
 from aistack.schemas.source import SourceContent, SourceTypeEnum
 from aistack.server.sources.routes import SourceConfigSpec
-from aistack_runtime.detector.ascend import get_ascend_cann_variant
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector.ascend import get_ascend_cann_variant
+from gpustack_runtime.detector import ManufacturerEnum
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

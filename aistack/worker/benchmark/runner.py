@@ -28,11 +28,11 @@ from aistack.schemas.benchmark import (
 from aistack.utils.command import find_bool_parameter, sanitize_args
 from aistack.utils.config import apply_registry_override_to_image
 from aistack.utils.envs import filter_env_vars, get_aistack_env_bool, sanitize_env
-from aistack_runtime.logging import setup_logging as setup_runtime_logging
-from aistack_runtime import envs as runtime_envs
-from aistack_runtime.deployer import ContainerFile, ContainerMount
+from gpustack_runtime.logging import setup_logging as setup_runtime_logging
+from gpustack_runtime import envs as runtime_envs
+from gpustack_runtime.deployer import ContainerFile, ContainerMount
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     Container,
     ContainerEnv,
     ContainerExecution,

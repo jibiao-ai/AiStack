@@ -1,9 +1,9 @@
 import argparse
 
 from aistack import __version__, __benchmark_runner_version__, __operator_version__
-from aistack_higress_plugins import __version__ as __higress_plugins_version__
+from gpustack_higress_plugins import __version__ as __higress_plugins_version__
 
-from aistack_runtime.cmds import (
+from gpustack_runtime.cmds import (
     CopyImagesSubCommand,
     ListImagesSubCommand,
     SaveImagesSubCommand,

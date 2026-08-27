@@ -75,7 +75,7 @@ body:
     attributes:
       label: 🔍 Accelerator detection diagnosis (if applicable)
       description: |
-        If detection fails, run the following diagnostic command inside the problematic worker container and provide the output: `time AISTACK_RUNTIME_LOG_LEVEL=debug AISTACK_RUNTIME_LOG_EXCEPTION=1 aistack-runtime detect --format json`.
+        If detection fails, run the following diagnostic command inside the problematic worker container and provide the output: `time AISTACK_RUNTIME_LOG_LEVEL=debug AISTACK_RUNTIME_LOG_EXCEPTION=1 gpustack-runtime detect --format json`.
       placeholder: |
         Output(wrap with code block)
     validations:
@@ -86,7 +86,7 @@ body:
     attributes:
       label: 🐳 Model deployment / container diagnosis (if applicable)
       description: |
-        If deploying fails, run the following diagnostic command inside the problematic worker container and provide the output: `aistack-runtime inspect <model instance name>`.
+        If deploying fails, run the following diagnostic command inside the problematic worker container and provide the output: `gpustack-runtime inspect <model instance name>`.
       placeholder: |
         Output(wrap with code block or file attachment)
     validations:

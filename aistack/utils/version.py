@@ -1,6 +1,6 @@
 from functools import cmp_to_key
 
-from aistack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.deployer.__utils__ import compare_versions
 from packaging import version
 
 
@@ -106,7 +106,7 @@ def pick_runtime_version(candidates, host_version):
       oldest overall;
     - no candidates -> None.
 
-    Comparisons use aistack_runtime's tolerant compare_versions, not
+    Comparisons use gpustack_runtime's tolerant compare_versions, not
     PEP 440 parsing: runner and runtime version strings (e.g. CANN's
     "8.1.RC1.alpha003") are not guaranteed to be PEP 440.
     """

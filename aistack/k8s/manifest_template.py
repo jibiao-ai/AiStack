@@ -9,7 +9,7 @@ from aistack import __operator_version__
 from aistack.gpu_instances.cluster_apis_util import get_namespace_name
 from aistack.utils.compat_importlib import pkg_resources
 from aistack.schemas.clusters import ClusterRegistrationTokenPublic, K8sOptions
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 
 
 _DEFAULT_OPERATOR_IMAGE = f"aistack/aistack-operator:{__operator_version__}"

@@ -2,7 +2,7 @@ import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from aistack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.deployer.__utils__ import compare_versions
 
 from aistack.policies.base import (
     Allocatable,

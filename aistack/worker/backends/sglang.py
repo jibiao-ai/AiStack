@@ -2,11 +2,11 @@ import logging
 import os
 from typing import Dict, List, Optional, Tuple
 
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 from packaging.version import Version
 from packaging.specifiers import SpecifierSet
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     Container,
     ContainerEnv,
     ContainerExecution,
@@ -15,7 +15,7 @@ from aistack_runtime.deployer import (
     create_workload,
     ContainerRestartPolicyEnum,
 )
-from aistack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.deployer.__utils__ import compare_versions
 
 from aistack.scheduler.model_registry import is_multimodal_model
 from aistack.schemas.models import (

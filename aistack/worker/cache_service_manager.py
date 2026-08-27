@@ -8,7 +8,7 @@ from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 import httpx
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     Container,
     ContainerEnv,
     ContainerExecution,
@@ -20,8 +20,8 @@ from aistack_runtime.deployer import (
     delete_workload,
     get_workload,
 )
-from aistack_runtime.detector import detect_backend, detect_devices
-from aistack_runtime.envs import (
+from gpustack_runtime.detector import detect_backend, detect_devices
+from gpustack_runtime.envs import (
     AISTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY,
     to_bool,
 )

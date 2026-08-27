@@ -1,6 +1,6 @@
 import logging
 from typing import Callable
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     list_workloads,
     WorkloadStatusStateEnum,
     delete_workload,

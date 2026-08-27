@@ -6,7 +6,7 @@ import shutil
 from typing import Any, List, Literal, Optional, Sequence, Tuple, Union
 import shlex
 
-from aistack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.deployer.__utils__ import compare_versions
 
 _TRUTHY_VALUES = frozenset({"1", "true", "yes", "on", "t", "y"})
 _FALSY_VALUES = frozenset({"0", "false", "no", "off", "f", "n"})

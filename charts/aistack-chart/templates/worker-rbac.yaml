@@ -37,7 +37,7 @@ roleRef:
   name: {{ .Release.Name }}-worker-ingressclass-viewer
   apiGroup: rbac.authorization.k8s.io
 ---
-# Allow the worker (aistack-runtime deployer) to resolve the vendor RuntimeClass
+# Allow the worker (gpustack-runtime deployer) to resolve the vendor RuntimeClass
 # (e.g. "ascend", "nvidia") for accelerated workload Pods,
 # see AISTACK_RUNTIME_DEPLOY_RESOURCE_KEY_MAP_RUNTIME_CLASS.
 apiVersion: rbac.authorization.k8s.io/v1
@@ -100,7 +100,7 @@ rules:
       - list
       - watch
   # The read is what turns a bare "ImagePullBackOff" into the registry error
-  # behind it: aistack-runtime reads the workload Pod's Events to explain why
+  # behind it: gpustack-runtime reads the workload Pod's Events to explain why
   # the pull fails, and reports it on the workload's state message,
   # see aistack/aistack#5869.
   - apiGroups:

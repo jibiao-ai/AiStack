@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     Container,
     ContainerEnv,
     ContainerExecution,
@@ -15,8 +15,8 @@ from aistack_runtime.deployer import (
     ContainerPort,
     ContainerRestartPolicyEnum,
 )
-from aistack_runtime.deployer.__utils__ import compare_versions
-from aistack_runtime.detector import ManufacturerEnum, manufacturer_to_backend
+from gpustack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.detector import ManufacturerEnum, manufacturer_to_backend
 from aistack.schemas.models import (
     ModelInstance,
     SpeculativeAlgorithmEnum,

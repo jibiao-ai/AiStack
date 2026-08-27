@@ -8,13 +8,13 @@ from sqlalchemy import Column, Text
 from sqlmodel import SQLModel, Field as SQLField
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from aistack_runner import (
+from gpustack_runner import (
     BackendRunners,
     Runners,
     ServiceRunners,
     list_runners,
 )
-from aistack_runner.runner import (
+from gpustack_runner.runner import (
     Runner,
     build_backend_runners,
     build_service_runners,
@@ -62,7 +62,7 @@ _FILTER_KEYS = frozenset(_KEY_FIELDS)
 
 class RunnerOverrideEntryBase(SQLModel):
     """A single per-platform runner override row, aligned field-for-field
-    with the packaged ``aistack_runner.Runner`` dataclass."""
+    with the packaged ``gpustack_runner.Runner`` dataclass."""
 
     backend: str = SQLField(index=True)
     backend_version: str = SQLField(default="")

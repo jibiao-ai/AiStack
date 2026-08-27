@@ -9,7 +9,7 @@ Tests for how the runtime detector reports a MIG-partitioned card:
 
 import pytest
 
-from aistack_runtime.detector import Device, ManufacturerEnum
+from gpustack_runtime.detector import Device, ManufacturerEnum
 
 import aistack.detectors.runtime.runtime as runtime_module
 from aistack.detectors.runtime.runtime import Runtime

@@ -13,8 +13,8 @@ from aistack.schemas.runner_source import (
     merged_service_runners,
 )
 from aistack.server.db import async_session
-from aistack_runtime.detector.ascend import get_ascend_cann_variant
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector.ascend import get_ascend_cann_variant
+from gpustack_runtime.detector import ManufacturerEnum
 
 
 logger = logging.getLogger(__name__)

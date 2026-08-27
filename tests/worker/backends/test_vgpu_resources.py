@@ -13,7 +13,7 @@ import types
 
 import pytest
 
-from aistack_runtime.deployer import WorkloadPlan
+from gpustack_runtime.deployer import WorkloadPlan
 
 import aistack.worker.backends.base as base_module
 from aistack.schemas.models import GPUTypeSelector

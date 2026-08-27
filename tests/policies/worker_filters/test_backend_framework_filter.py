@@ -1,7 +1,7 @@
 from unittest.mock import patch, AsyncMock, MagicMock
 
 import pytest
-from aistack_runner.runner import Runner
+from gpustack_runner.runner import Runner
 
 from aistack.policies.worker_filters.backend_framework_filter import (
     BackendFrameworkFilter,

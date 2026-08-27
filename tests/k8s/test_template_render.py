@@ -1,7 +1,7 @@
 import json
 
 import yaml
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 from sqlalchemy.dialects import sqlite
 
 from aistack.k8s.manifest_template import (

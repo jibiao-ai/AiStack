@@ -9,7 +9,7 @@ from typing import Dict, List, Optional
 from fastapi import APIRouter, Request, Query
 from fastapi.responses import StreamingResponse
 
-from aistack_runtime.deployer import logs_workload
+from gpustack_runtime.deployer import logs_workload
 
 from aistack.api.exceptions import NotFoundException
 from aistack.schemas.cache_services import cache_service_instance_workload_name

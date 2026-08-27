@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 from fastapi import APIRouter, Query
 from packaging.version import Version
 from packaging.specifiers import SpecifierSet
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 from aistack.api.exceptions import NotFoundException
 from aistack.schemas.common import PaginatedList, Pagination
 from aistack.schemas.gpu_devices import GPUDevice

@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import RedirectResponse, StreamingResponse
 from urllib.parse import urlencode
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 from sqlalchemy.orm import selectinload
 from sqlmodel import and_, or_
 from sqlmodel.ext.asyncio.session import AsyncSession

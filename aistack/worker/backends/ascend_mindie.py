@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Tuple
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     Container,
     ContainerProfileEnum,
     ContainerExecution,
@@ -17,7 +17,7 @@ from aistack_runtime.deployer import (
     ContainerFile,
     ContainerRestartPolicyEnum,
 )
-from aistack_runtime.envs import to_bool
+from gpustack_runtime.envs import to_bool
 
 from aistack.schemas.models import ModelInstanceDeploymentMetadata
 from aistack.utils.command import find_parameter, format_backend_parameters

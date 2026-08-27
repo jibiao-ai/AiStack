@@ -5,7 +5,7 @@ import subprocess
 from typing import Dict, List, Optional
 import uuid
 import pytest
-from aistack_runtime.detector import manufacturer_to_backend, ManufacturerEnum
+from gpustack_runtime.detector import manufacturer_to_backend, ManufacturerEnum
 
 from aistack.config.config import Config, set_global_config
 from aistack.logging import setup_logging

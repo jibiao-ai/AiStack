@@ -30,17 +30,23 @@ ARG HIGRESS_APISERVER_VERSION=0.0.26
 ARG PROMETHEUS_VERSION=3.5.1
 ARG GRAFANA_VERSION=12.2.4
 
+# Upstream image namespace for build-stage dependencies.
+# These images are binary-compatible with AiStack — only branding differs.
+# Default: gpustack (pulls from Docker Hub gpustack/* which actually exist).
+# Override with UPSTREAM_NS=aistack once you have your own registry.
+ARG UPSTREAM_NS=gpustack
+
 # Stage Base
 #
 # Example build command:
 #   docker build --tag=aistack/aistack:base --file=pack/Dockerfile --target=base --progress=plain .
 #
 
-FROM aistack/aistack-operator:${AISTACK_OPERATOR_VERSION} AS aistack-operator
-FROM aistack/mirrored-higress-api-server:${HIGRESS_APISERVER_VERSION} AS apiserver
-FROM aistack/mirrored-higress-higress:${HIGRESS_VERSION} AS controller
-FROM aistack/mirrored-higress-pilot:${HIGRESS_VERSION} AS pilot
-FROM aistack/mirrored-higress-gateway:${HIGRESS_VERSION} AS gateway
+FROM ${UPSTREAM_NS}/${UPSTREAM_NS}-operator:${AISTACK_OPERATOR_VERSION} AS aistack-operator
+FROM ${UPSTREAM_NS}/mirrored-higress-api-server:${HIGRESS_APISERVER_VERSION} AS apiserver
+FROM ${UPSTREAM_NS}/mirrored-higress-higress:${HIGRESS_VERSION} AS controller
+FROM ${UPSTREAM_NS}/mirrored-higress-pilot:${HIGRESS_VERSION} AS pilot
+FROM ${UPSTREAM_NS}/mirrored-higress-gateway:${HIGRESS_VERSION} AS gateway
 FROM ubuntu:24.04@sha256:d1e2e92c075e5ca139d51a140fff46f84315c0fdce203eab2807c7e495eff4f9 AS base
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 

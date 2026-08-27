@@ -6,7 +6,7 @@ import os
 from collections import defaultdict
 from typing import List, Tuple, Optional, Dict
 
-from aistack_runtime.detector import ManufacturerEnum
+from gpustack_runtime.detector import ManufacturerEnum
 from sqlmodel.ext.asyncio.session import AsyncSession
 from cachetools import TTLCache
 from aiolimiter import AsyncLimiter

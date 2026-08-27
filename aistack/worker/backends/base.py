@@ -11,21 +11,21 @@ from typing import Dict, Optional, List, Tuple, Union
 from abc import ABC, abstractmethod
 from transformers import PretrainedConfig
 
-from aistack_runner.runner import BackendVersionedRunner
-from aistack_runtime.deployer import ContainerResources, ContainerMount, ContainerPort
-from aistack_runtime.deployer.__utils__ import compare_versions
-from aistack_runtime.detector import (
+from gpustack_runner.runner import BackendVersionedRunner
+from gpustack_runtime.deployer import ContainerResources, ContainerMount, ContainerPort
+from gpustack_runtime.deployer.__utils__ import compare_versions
+from gpustack_runtime.detector import (
     ManufacturerEnum,
     available_backends,
 )
-from aistack_runtime.detector.ascend import get_ascend_cann_variant
-from aistack_runtime import envs as runtime_envs
-from aistack_runtime.envs import (
+from gpustack_runtime.detector.ascend import get_ascend_cann_variant
+from gpustack_runtime import envs as runtime_envs
+from gpustack_runtime.envs import (
     to_bool,
 )
-from aistack_runtime.logging import setup_logging as setup_runtime_logging
-from aistack_runtime.deployer.docker import DockerWorkloadPlan
-from aistack_runtime.deployer import WorkloadPlan
+from gpustack_runtime.logging import setup_logging as setup_runtime_logging
+from gpustack_runtime.deployer.docker import DockerWorkloadPlan
+from gpustack_runtime.deployer import WorkloadPlan
 
 from aistack.client.generated_clientset import ClientSet
 from aistack import envs

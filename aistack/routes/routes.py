@@ -69,7 +69,7 @@ from aistack.schemas.principals import OrgRole
 from aistack.websocket_proxy.message_server import router as message_server_router
 from aistack.routes.gateway_metrics import router as gateway_metrics_router
 
-from aistack_higress_plugins.server import router as higress_plugins_router
+from gpustack_higress_plugins.server import router as higress_plugins_router
 
 versioned_prefix = "/v2"
 

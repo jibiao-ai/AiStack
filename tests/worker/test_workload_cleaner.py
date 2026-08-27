@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 from aistack.schemas.cache_services import CacheServiceInstance
 from aistack.worker.workload_cleaner import WorkloadCleaner
-from aistack_runtime.deployer import WorkloadStatusStateEnum
+from gpustack_runtime.deployer import WorkloadStatusStateEnum
 
 
 def _build_cleaner(worker_id: int = 1):

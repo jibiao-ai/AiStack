@@ -8,7 +8,7 @@ from aistack.utils.command import format_backend_parameters
 from aistack.utils.envs import sanitize_env
 from aistack.worker.backends.base import InferenceServer
 
-from aistack_runtime.deployer import (
+from gpustack_runtime.deployer import (
     Container,
     ContainerEnv,
     ContainerExecution,

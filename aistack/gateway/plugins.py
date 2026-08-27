@@ -13,7 +13,7 @@ import aiohttp
 
 from aistack.config.config import Config, GatewayPluginEntry
 from aistack.schemas.config import GatewayModeEnum
-from aistack_higress_plugins.server import router as higress_plugins_router
+from gpustack_higress_plugins.server import router as higress_plugins_router
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 http_path_prefix = higress_plugins_router.prefix.removeprefix("/")
 
 # Where the plugin package keeps the module bytes it also serves over HTTP.
-_plugins_dir = Path(str(files("aistack_higress_plugins").joinpath("plugins")))
+_plugins_dir = Path(str(files("gpustack_higress_plugins").joinpath("plugins")))
 
 
 @dataclass
@@ -42,7 +42,7 @@ class HigressPlugin:
 
 def _load_plugins_from_manifest() -> List[HigressPlugin]:
     manifest_text = (
-        files("aistack_higress_plugins")
+        files("gpustack_higress_plugins")
         .joinpath("manifest.json")
         .read_text(encoding="utf-8")
     )
@@ -125,7 +125,7 @@ def get_local_plugin_url(name: str, version: Optional[str] = None) -> Optional[s
     Only meaningful where Envoy and this process share a filesystem, which is
     the embedded gateway and nothing else -- see
     :func:`use_local_plugin_modules`. There the module bytes are already
-    present, shipped inside ``aistack_higress_plugins``, so serving them over
+    present, shipped inside ``gpustack_higress_plugins``, so serving them over
     HTTP only to fetch them back over loopback buys nothing and costs the one
     thing that actually broke: a dependency on this server being able to
     answer at the moment Envoy warms its listeners.

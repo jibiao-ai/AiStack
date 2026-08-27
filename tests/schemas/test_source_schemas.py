@@ -8,7 +8,7 @@ from importlib.resources import files
 
 import pytest
 import yaml
-from aistack_runner.runner import Runner
+from gpustack_runner.runner import Runner
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
