@@ -43,7 +43,10 @@ function download_ui() {
 
   aistack::log::info "downloading '${tag}' UI assets"
 
-  if ! curl --retry 3 --retry-connrefused --retry-delay 3 -sSfL "https://aistack-ui-1303613262.cos.accelerate.myqcloud.com/releases/${tag}.tar.gz" 2>/dev/null |
+  # NOTE: The UI package is hosted under the upstream GPUStack COS bucket.
+  # Do NOT change this URL — the bucket name is "gpustack-ui-*", not "aistack-ui-*".
+  # Branding is patched post-download by rebrand_ui() below.
+  if ! curl --retry 3 --retry-connrefused --retry-delay 3 -sSfL "https://gpustack-ui-1303613262.cos.accelerate.myqcloud.com/releases/${tag}.tar.gz" 2>/dev/null |
     tar -xzf - --directory "${tmp_ui_path}/ui" 2>/dev/null; then
 
     if [[ "${tag:-}" =~ ^v([0-9]+)\.([0-9]+)(\.[0-9]+)?(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
@@ -51,7 +54,7 @@ function download_ui() {
     fi
 
     aistack::log::warn "failed to download '${tag}' ui archive, fallback to '${default_tag}' ui archive"
-    if ! curl --retry 3 --retry-connrefused --retry-delay 3 -sSfL "https://aistack-ui-1303613262.cos.accelerate.myqcloud.com/releases/${default_tag}.tar.gz" |
+    if ! curl --retry 3 --retry-connrefused --retry-delay 3 -sSfL "https://gpustack-ui-1303613262.cos.accelerate.myqcloud.com/releases/${default_tag}.tar.gz" |
       tar -xzf - --directory "${tmp_ui_path}/ui" 2>/dev/null; then
       aistack::log::fatal "failed to download '${default_tag}' ui archive"
     fi
@@ -83,7 +86,9 @@ function make_community_backends() {
   aistack::log::info "pulling community backends"
 
   # Clone the repository
-  git clone https://github.com/aistack/community-inference-backends "${tmp_dir}"
+  # NOTE: The community backends repo lives under the upstream GPUStack GitHub org.
+  # Do NOT change this URL — the repo is "gpustack/community-inference-backends".
+  git clone https://github.com/gpustack/community-inference-backends "${tmp_dir}"
 
   # Build the community backends
   (
@@ -104,6 +109,25 @@ function make_community_backends() {
   aistack::log::info "community backends updated successfully"
 }
 
+# Rebrand the downloaded UI assets from GPUStack to AiStack
+function rebrand_ui() {
+  local ui_path="${ROOT_DIR}/aistack/ui"
+  local branding_path="${ROOT_DIR}/branding/ui-assets"
+
+  if [[ ! -d "${ui_path}" ]]; then
+    aistack::log::warn "UI directory not found, skipping rebrand"
+    return
+  fi
+
+  if [[ ! -d "${branding_path}" ]]; then
+    aistack::log::warn "Branding assets not found at ${branding_path}, skipping rebrand"
+    return
+  fi
+
+  aistack::log::info "rebranding UI assets (GPUStack → AiStack)"
+  bash "${ROOT_DIR}/hack/rebrand-ui.sh" "${ui_path}" "${branding_path}"
+}
+
 #
 # main
 #
@@ -112,5 +136,6 @@ aistack::log::info "+++ DEPENDENCIES +++"
 download_deps
 download_ui
 copy_extra_static
+rebrand_ui
 make_community_backends
 aistack::log::info "--- DEPENDENCIES ---"
