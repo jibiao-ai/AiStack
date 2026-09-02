@@ -274,14 +274,14 @@ class TestSupportedPlugins:
     def test_known_plugins_present(self):
         names = {p.name for p in supported_plugins}
         for expected in [
-            "aistack-ai-proxy",
+            "gpustack-ai-proxy",
             "ai-statistics",
-            "aistack-ext-auth",
-            "aistack-generic-proxy-router",
-            "aistack-model-mapper",
+            "gpustack-ext-auth",
+            "gpustack-generic-proxy-router",
+            "gpustack-model-mapper",
             "transformer",
-            "aistack-token-usage",
-            "aistack-set-header-pre-route",
+            "gpustack-token-usage",
+            "gpustack-set-header-pre-route",
         ]:
             assert expected in names, f"{expected} not found in supported_plugins"
 
@@ -295,7 +295,7 @@ class TestExtAuthPlugin:
         # The plugin package carries no entry for this plugin, so its URL can
         # only come from config -- see test_a_missing_module_url_is_refused.
         cfg.gateway_plugin = {
-            "aistack-ext-auth": GatewayPluginEntry.model_validate(
+            "gpustack-ext-auth": GatewayPluginEntry.model_validate(
                 {"url": "oci://example.com/ext-auth:1", "sha256": "ab"}
             )
         }
@@ -367,7 +367,7 @@ class TestExtAuthPlugin:
         overrides it."""
         monkeypatch.setattr(
             "aistack.gateway.plugins.supported_plugins",
-            [p for p in supported_plugins if p.name != "aistack-ext-auth"],
+            [p for p in supported_plugins if p.name != "gpustack-ext-auth"],
         )
         registry = MagicMock()
         registry.get_service_name.return_value = "aistack.static"
@@ -380,7 +380,7 @@ class TestExtAuthPlugin:
             "aistack.gateway.get_aistack_higress_registry", return_value=registry
         ):
             with pytest.raises(
-                ValueError, match="gateway_plugin.aistack-ext-auth.url"
+                ValueError, match="gateway_plugin.gpustack-ext-auth.url"
             ):
                 ext_auth_plugin(cfg=cfg)
 
@@ -532,11 +532,11 @@ class TestExtAuthPluginOverrides:
         # never sees -- and would skip the extra="forbid" on url / sha256.
         entries = {
             "url": "oci://example.com/ext-auth:1",
-            **gateway_plugin.pop("aistack-ext-auth", {}),
+            **gateway_plugin.pop("gpustack-ext-auth", {}),
         }
         cfg = MagicMock()
         cfg.gateway_plugin = {
-            "aistack-ext-auth": GatewayPluginEntry.model_validate(entries),
+            "gpustack-ext-auth": GatewayPluginEntry.model_validate(entries),
             **{
                 name: GatewayPluginEntry.model_validate(entry)
                 for name, entry in gateway_plugin.items()
@@ -561,7 +561,7 @@ class TestExtAuthPluginOverrides:
     def test_config_knobs_reach_the_default_config(self):
         spec = self._ext_auth(
             {
-                "aistack-ext-auth": {
+                "gpustack-ext-auth": {
                     "config": {
                         "local_auth": {"enabled": False},
                         "authz": {"timeout": 5000},
@@ -621,14 +621,14 @@ class TestExtAuthPluginOverrides:
     )
     def test_fields_that_would_grant_access_are_refused(self, config, why):
         with pytest.raises(ValueError, match="Invalid gateway_plugin"):
-            self._ext_auth({"aistack-ext-auth": {"config": config}})
+            self._ext_auth({"gpustack-ext-auth": {"config": config}})
 
     def test_a_typo_in_a_knob_is_refused_too(self):
         # Silently ignoring it would leave the plugin on a default the operator
         # believes they changed.
         with pytest.raises(ValueError, match="Invalid gateway_plugin"):
             self._ext_auth(
-                {"aistack-ext-auth": {"config": {"local_auth": {"enable": False}}}}
+                {"gpustack-ext-auth": {"config": {"local_auth": {"enable": False}}}}
             )
 
 
@@ -661,7 +661,7 @@ class TestDeprecatedGatewayEnvs:
 
         cfg = make_cfg(
             "http://127.0.0.1",
-            {"aistack-ext-auth": {"config": {"authz": {"timeout": 5000}}}},
+            {"gpustack-ext-auth": {"config": {"authz": {"timeout": 5000}}}},
         )
 
         assert ext_auth_override(cfg).authz.timeout == 5000

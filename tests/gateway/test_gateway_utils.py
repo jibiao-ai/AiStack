@@ -398,7 +398,7 @@ def _expected_router_spec() -> WasmPluginSpec:
         defaultConfigDisable=False,
         phase="AUTHN",
         priority=900,
-        url="http://plugin-server/aistack-generic-proxy-router/1.0.0/plugin.wasm",
+        url="http://plugin-server/gpustack-generic-proxy-router/1.0.0/plugin.wasm",
     )
 
 

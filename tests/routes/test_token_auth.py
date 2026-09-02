@@ -534,7 +534,7 @@ async def test_a_key_with_no_access_key_does_not_leave_a_leading_dot(
 
 def test_consumer_golden_value():
     """Shared with the plugin's TestFailOpenStillDerivesTheConsumer, in
-    extensions/aistack-ext-auth/failure_test.go.
+    extensions/gpustack-ext-auth/failure_test.go.
 
     The plugin rebuilds this string itself on public routes -- where the server
     never sees the request -- so the two are the same value produced twice, with

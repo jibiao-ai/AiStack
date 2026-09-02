@@ -91,7 +91,7 @@ warning.
 
 | Deprecated variable                                   | Description                                              | Replaced by                                                | Default                              | Applies to |
 | ----------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------ | ---------- |
-| `AISTACK_HIGRESS_EXT_AUTH_TIMEOUT_MS`                | Gateway authentication call timeout, in milliseconds.    | `gateway_plugin.aistack-ext-auth.config.authz.timeout`    | `30000`                              | Server     |
+| `AISTACK_HIGRESS_EXT_AUTH_TIMEOUT_MS`                | Gateway authentication call timeout, in milliseconds.    | `gateway_plugin.gpustack-ext-auth.config.authz.timeout`    | `30000`                              | Server     |
 | `AISTACK_GATEWAY_AI_STATISTICS_PLUGIN_CONTENT_TYPES` | Comma-separated content types metered for token usage.   | `gateway_plugin.ai-statistics.config.enable_content_types` | `application/json,text/event-stream` | Server     |
 
 ### Usage Tracking Configuration

@@ -66,7 +66,7 @@ def get_plugin_url_with_name_and_version(
     read as ``latest`` into ``supported_plugins`` -- so a version passed in can
     only assert what the package already decided; it cannot select an older
     build, because no older build is present to select. Leaving it out is what
-    keeps a ``aistack-higress-plugins`` bump from having to touch every call
+    keeps a ``gpustack-higress-plugins`` bump from having to touch every call
     site, at the cost of that assertion: a plugin whose config schema changed
     across the bump is then caught by the gateway rejecting the config rather
     than by a startup error here.
@@ -159,7 +159,7 @@ def plugin_entry(name: str, cfg: Optional[Config]) -> Optional[GatewayPluginEntr
 
     That is the name in ``supported_plugins`` and in the module URL, which for
     five of the eight plugins is not the name of the WasmPlugin resource they
-    end up as -- ``aistack-ext-auth`` is deployed as ``aistack-llm-ext-auth``,
+    end up as -- ``gpustack-ext-auth`` is deployed as ``aistack-llm-ext-auth``,
     ``transformer`` as ``aistack-header-transformer``, and so on. Keying by
     the resource name instead would silently match nothing.
     """

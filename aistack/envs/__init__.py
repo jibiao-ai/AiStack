@@ -78,10 +78,10 @@ def _deprecated_gateway_env(name: str, replacement: str, default, parse):
 
 
 def deprecated_ext_auth_timeout_ms() -> int:
-    """Default for ``gateway_plugin.aistack-ext-auth.config.authz.timeout``."""
+    """Default for ``gateway_plugin.gpustack-ext-auth.config.authz.timeout``."""
     return _deprecated_gateway_env(
         "AISTACK_HIGRESS_EXT_AUTH_TIMEOUT_MS",
-        "gateway_plugin.aistack-ext-auth.config.authz.timeout",
+        "gateway_plugin.gpustack-ext-auth.config.authz.timeout",
         30000,
         int,
     )

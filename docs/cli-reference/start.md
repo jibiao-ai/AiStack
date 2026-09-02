@@ -219,7 +219,7 @@ builtin_grafana_port: 13000
 # the plugin's own settings and is validated against what that plugin accepts,
 # so a field it does not declare fails startup rather than being ignored.
 gateway_plugin:
-  aistack-ext-auth:
+  gpustack-ext-auth:
     config:
       local_auth:
         # Whether the gateway authenticates API keys itself. Turned off, every

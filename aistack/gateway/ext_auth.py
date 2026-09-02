@@ -3,7 +3,7 @@
 Authentication used to happen entirely on the server: every inference request
 made a synchronous ``/token-auth`` call that both identified the caller and
 decided whether they were allowed through. That is why a server restart took
-inference down with it. ``aistack-ext-auth`` splits the two --
+inference down with it. ``gpustack-ext-auth`` splits the two --
 
 * **authentication** is a pure function of the credential, so it moves here:
   the plugin verifies a generated key's ``secret_key_digest`` locally in a few
@@ -48,7 +48,7 @@ logger = logging.getLogger(__name__)
 # authorized twice, or none at all.
 ext_auth_resource_name = "aistack-llm-ext-auth"
 
-ext_auth_plugin_name = "aistack-ext-auth"
+ext_auth_plugin_name = "gpustack-ext-auth"
 
 # Access-policy value the plugin understands. Lower-case on purpose: it mirrors
 # ``AccessPolicyEnum.PUBLIC``'s wire value, which is what the reconciler
@@ -107,7 +107,7 @@ class AuthzOverride(BaseModel):
 
 
 class ExtAuthOverride(BaseModel):
-    """``gateway_plugin["aistack-ext-auth"].config``.
+    """``gateway_plugin["gpustack-ext-auth"].config``.
 
     Shaped like the CR's ``defaultConfig`` so field paths transcribe straight
     out of the plugin's README, and validated field by field so the shape does
@@ -179,7 +179,7 @@ def ext_auth_module_source(cfg: Config) -> Dict[str, Any]:
     """Where Envoy pulls the module from, as ``WasmPluginSpec`` fields.
 
     Resolved from the bundled plugin package at whatever version that package
-    ships, unless ``gateway_plugin.aistack-ext-auth.url`` overrides it. Nothing
+    ships, unless ``gateway_plugin.gpustack-ext-auth.url`` overrides it. Nothing
     is defaulted when neither yields a URL -- a package carrying no such plugin
     at all. The alternative failure is Envoy unable to pull the module, which
     means the filter does not load, which under ``FAIL_OPEN`` serves every

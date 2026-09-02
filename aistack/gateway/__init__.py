@@ -385,7 +385,7 @@ def model_pre_route_plugin(cfg: Config) -> Tuple[str, WasmPluginSpec]:
         matchRules=[],
         phase="AUTHN",
         priority=90,
-        **plugin_spec_overrides("aistack-set-header-pre-route", cfg=cfg),
+        **plugin_spec_overrides("gpustack-set-header-pre-route", cfg=cfg),
     )
     return resource_name, expected_spec
 
@@ -394,7 +394,7 @@ def model_mapper_plugin(cfg: Config) -> Tuple[str, WasmPluginSpec]:
     return aistack_model_mapper_name, WasmPluginSpec(
         phase="AUTHN",
         priority=800,
-        **plugin_spec_overrides("aistack-model-mapper", cfg=cfg),
+        **plugin_spec_overrides("gpustack-model-mapper", cfg=cfg),
         defaultConfigDisable=False,
         defaultConfig={"modelMapping": {}},
         matchRules=[],
@@ -582,7 +582,7 @@ def generic_proxy_router_plugin(cfg: Config) -> Tuple[str, WasmPluginSpec]:
     # ``aistack-model-router`` slot previously occupied by Higress's built-in
     # model-router so the upgrade is an in-place swap. The plugin image name
     # passed to ``get_plugin_url_with_name_and_version`` below stays
-    # ``aistack-generic-proxy-router`` (its identity in the plugin manifest).
+    # ``gpustack-generic-proxy-router`` (its identity in the plugin manifest).
     resource_name = aistack_generic_proxy_router_name
     enabled_path_suffixes = supported_openai_routes + supported_anthropic_routes
     expected_spec = WasmPluginSpec(
@@ -598,7 +598,7 @@ def generic_proxy_router_plugin(cfg: Config) -> Tuple[str, WasmPluginSpec]:
         matchRules=[],
         phase="AUTHN",
         priority=900,
-        **plugin_spec_overrides("aistack-generic-proxy-router", cfg=cfg),
+        **plugin_spec_overrides("gpustack-generic-proxy-router", cfg=cfg),
     )
     return resource_name, expected_spec
 
@@ -623,7 +623,7 @@ def token_usage_plugin(cfg: Config) -> Tuple[str, WasmPluginSpec]:
         matchRules=[],
         phase="UNSPECIFIED_PHASE",
         priority=400,
-        **plugin_spec_overrides("aistack-token-usage", cfg=cfg),
+        **plugin_spec_overrides("gpustack-token-usage", cfg=cfg),
     )
     return resource_name, expected_spec
 
@@ -638,7 +638,7 @@ def ai_proxy_plugin(cfg: Config) -> Tuple[str, WasmPluginSpec]:
         matchRules=[],
         priority=100,
         phase="UNSPECIFIED_PHASE",
-        **plugin_spec_overrides("aistack-ai-proxy", cfg=cfg),
+        **plugin_spec_overrides("gpustack-ai-proxy", cfg=cfg),
     )
     return resource_name, expected_spec
 

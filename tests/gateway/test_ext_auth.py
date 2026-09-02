@@ -49,7 +49,7 @@ def _cfg(namespace="default", gateway_namespace="higress-system"):
     # The plugin package carries no entry for this plugin, so a build has to be
     # named in config before a spec can be rendered at all.
     cfg.gateway_plugin = {
-        "aistack-ext-auth": GatewayPluginEntry(url="oci://example.com/ext-auth:1")
+        "gpustack-ext-auth": GatewayPluginEntry(url="oci://example.com/ext-auth:1")
     }
     cfg.get_namespace.return_value = namespace
     cfg.gateway_namespace = gateway_namespace
