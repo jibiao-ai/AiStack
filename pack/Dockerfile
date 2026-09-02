@@ -521,9 +521,11 @@ RUN --mount=type=cache,target=/root/.cache \
     uv pip install --no-build-isolation --extra-index-url https://download.pytorch.org/whl/cpu/ \
         /workspace/aistack/dist/*.whl
 
-    # Download tools
-    aistack download-tools
-    tree -hs "$(pip show aistack | grep Location: | head -n 1 | cut -d" " -f 2)/aistack/third_party"
+    # Download tools (best-effort: tools will be fetched at runtime if skipped here)
+    if ! aistack download-tools; then
+        echo "WARNING: download-tools failed (network unreachable?), tools will be downloaded at first run"
+    fi
+    tree -hs "$(pip show aistack | grep Location: | head -n 1 | cut -d" " -f 2)/aistack/third_party" || true
 
     # Set up environment
     mkdir -p /var/lib/aistack \

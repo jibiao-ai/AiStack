@@ -72,10 +72,10 @@ class ToolsManager:
     def _check_and_set_download_base_url(self):
         urls = [
             "https://github.com",
-            "https://aistack-1303613262.cos.ap-guangzhou.myqcloud.com",
+            "https://gpustack-1303613262.cos.ap-guangzhou.myqcloud.com",
         ]
 
-        test_path = f"/aistack/gguf-parser-go/releases/download/{BUILTIN_GGUF_PARSER_VERSION}/gguf-parser-linux-amd64"
+        test_path = f"/gpustack/gguf-parser-go/releases/download/{BUILTIN_GGUF_PARSER_VERSION}/gguf-parser-linux-amd64"
         test_size = 512 * 1024  # 512KB
         download_tests = []
         for url in urls:
@@ -174,7 +174,7 @@ class ToolsManager:
             return
 
         platform_name = self._get_gguf_parser_platform_name()
-        url_path = f"aistack/gguf-parser-go/releases/download/{version}/gguf-parser-{platform_name}{suffix}"
+        url_path = f"gpustack/gguf-parser-go/releases/download/{version}/gguf-parser-{platform_name}{suffix}"
 
         logger.info(f"Downloading gguf-parser-{platform_name} '{version}'")
         self._download_file(url_path, target_file)
@@ -228,7 +228,7 @@ class ToolsManager:
             shutil.rmtree(fastfetch_tmp_dir)
         os.makedirs(fastfetch_tmp_dir, exist_ok=True)
 
-        url_path = f"aistack/fastfetch/releases/download/{version}/fastfetch-{platform_name}.zip"
+        url_path = f"gpustack/fastfetch/releases/download/{version}/fastfetch-{platform_name}.zip"
 
         self._download_file(url_path, tmp_file)
         self._extract_file(tmp_file, fastfetch_tmp_dir)
