@@ -82,19 +82,19 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: AISTACK_RUNTIME_DEPLOY
+            - name: GPUSTACK_RUNTIME_DEPLOY
               value: "Kubernetes"
-            - name: AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT
+            - name: GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT
               value: "true"
-            - name: AISTACK_RUNTIME_DEPLOY_MIRRORED_NAME
+            - name: GPUSTACK_RUNTIME_DEPLOY_MIRRORED_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: AISTACK_RUNTIME_KUBERNETES_NAMESPACE
+            - name: GPUSTACK_RUNTIME_KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: AISTACK_RUNTIME_KUBERNETES_NODE_NAME
+            - name: GPUSTACK_RUNTIME_KUBERNETES_NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName

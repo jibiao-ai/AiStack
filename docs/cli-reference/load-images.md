@@ -22,7 +22,7 @@ aistack load-images [OPTIONS] [input]
 | `--max-workers` `MAX_WORKERS`                                         | `1`                                                             | Maximum number of worker threads to use for copying images concurrently |
 | `--max-retries` `MAX_RETRIES`                                         | `1`                                                             | Maximum number of retries for copying an image                          |
 | `--destination`, `--dest` `DESTINATION`                               | `docker.io` (env: `AISTACK_SYSTEM_DEFAULT_CONTAINER_REGISTRY`) | Override destination registry                                           |
-| `--destination-namespace`, `--dest-namespace` `DESTINATION_NAMESPACE` | (env: `AISTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_NAMESPACE`)    | Override namespace in the destination registry                          |
+| `--destination-namespace`, `--dest-namespace` `DESTINATION_NAMESPACE` | (env: `GPUSTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_NAMESPACE`)    | Override namespace in the destination registry                          |
 | `--archive-format` `{oci,docker}`                                     | `oci`                                                           | Archive format to save                                                  |
 | `--storage` `{docker,podman}`                                         | `docker`                                                        | Container image storage to load images into                             |
 | `input`                                                               | (current working directory)                                     | Input directory to load images from                                     |

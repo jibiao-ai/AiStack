@@ -39,7 +39,7 @@ roleRef:
 ---
 # Allow the worker (gpustack-runtime deployer) to resolve the vendor RuntimeClass
 # (e.g. "ascend", "nvidia") for accelerated workload Pods,
-# see AISTACK_RUNTIME_DEPLOY_RESOURCE_KEY_MAP_RUNTIME_CLASS.
+# see GPUSTACK_RUNTIME_DEPLOY_RESOURCE_KEY_MAP_RUNTIME_CLASS.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:

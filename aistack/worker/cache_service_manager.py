@@ -22,7 +22,7 @@ from gpustack_runtime.deployer import (
 )
 from gpustack_runtime.detector import detect_backend, detect_devices
 from gpustack_runtime.envs import (
-    AISTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY,
+    GPUSTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY,
     to_bool,
 )
 
@@ -422,7 +422,7 @@ class CacheServiceManager:
         resources = ContainerResources()
         backend = detect_backend()
         if isinstance(backend, str) and backend:
-            key = AISTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY.get(backend)
+            key = GPUSTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY.get(backend)
             if key:
                 resources[key] = "all"
         return resources

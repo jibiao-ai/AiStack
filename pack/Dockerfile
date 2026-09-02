@@ -16,15 +16,15 @@
 # Argument usage:
 # - PYTHON_VERSION: Version of Python to use.
 # - AISTACK_BASE_IMAGE: Base image for the aistack stage.
-# - AISTACK_RUNTIME_ROCM_VERSION: Version of ROCm detection library for aistack-runtime, update this if project dependencies has changed.
-# - AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS: Semicolon-separated list of labels to filter mirrored images when deploying mirrored deployment.
+# - GPUSTACK_RUNTIME_ROCM_VERSION: Version of ROCm detection library for aistack-runtime, update this if project dependencies has changed.
+# - GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS: Semicolon-separated list of labels to filter mirrored images when deploying mirrored deployment.
 # - HIGRESS_VERSION: Version of Higress to use.
 # - HIGRESS_APISERVER_VERSION: Version of Higress API server to use.
 ARG PYTHON_VERSION=3.11
 ARG AISTACK_BASE_IMAGE=base
 ARG AISTACK_OPERATOR_VERSION=v0.8.5
-ARG AISTACK_RUNTIME_ROCM_VERSION=7.0.2
-ARG AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS
+ARG GPUSTACK_RUNTIME_ROCM_VERSION=7.0.2
+ARG GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS
 ARG HIGRESS_VERSION=2.1.9
 ARG HIGRESS_APISERVER_VERSION=0.0.26
 ARG PROMETHEUS_VERSION=3.5.1
@@ -298,7 +298,7 @@ ENV S6_KEEP_ENV=1 \
 # Vendor ROCm libraries from ROCm base image.
 # Only the linux/amd64 ROCm source image is available, so pin the source
 # platform explicitly; the build host itself can be any platform.
-FROM --platform=linux/amd64 rocm/dev-ubuntu-22.04:${AISTACK_RUNTIME_ROCM_VERSION} AS rocm-base
+FROM --platform=linux/amd64 rocm/dev-ubuntu-22.04:${GPUSTACK_RUNTIME_ROCM_VERSION} AS rocm-base
 
 FROM ${AISTACK_BASE_IMAGE} AS aistack
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
@@ -592,7 +592,7 @@ RUN --mount=type=bind,from=rocm-base,source=/opt/rocm/share,target=/opt/rocm/sha
     fi
 EOF
 ENV AMD_VISIBLE_DEVICES="all" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/opt/rocm"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/opt/rocm"
 
 ## Active all Ascend devices detection,
 ## works with (default) Ascend container runtime and privileged mode.
@@ -614,7 +614,7 @@ ENV AMD_VISIBLE_DEVICES="all" \
 ##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock --security-opt seccomp=unconfined -v /dev:/dev:ro -v /usr/local/dcmi:/usr/local/dcmi:ro -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro -v /etc/hccn.conf:/etc/hccn.conf:ro -v /etc/ascend_install.info:/etc/ascend_install.info:ro ...
 ENV ASCEND_HOME_PATH="/usr/local/Ascend/ascend-toolkit/latest" \
     LD_LIBRARY_PATH="/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:/usr/local/Ascend/ascend-toolkit/latest/runtime/lib64:${LD_LIBRARY_PATH}" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/Ascend/ascend-toolkit;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/Ascend/ascend-toolkit;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
 
 ## Active all Cambricon devices detection,
 ## works with (default) Cambricon container runtime and privileged mode.
@@ -631,7 +631,7 @@ ENV ASCEND_HOME_PATH="/usr/local/Ascend/ascend-toolkit/latest" \
 ENV CAMBRICON_VISIBLE_DEVICES="all" \
     NEUWARE_HOME="/usr/local/neuware" \
     LD_LIBRARY_PATH="/usr/local/neuware/lib64:${LD_LIBRARY_PATH}" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/neuware;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/neuware;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
 
 ## Active all Hygon devices detection,
 ## works with (default) Hygon container runtime and privileged mode.
@@ -645,7 +645,7 @@ ENV CAMBRICON_VISIBLE_DEVICES="all" \
 ##   + Disallowing privileged, try with:
 ##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock --security-opt seccomp=unconfined -v /dev:/dev:ro --group-add video -v /opt/hyhal:/opt/hyhal:ro -v /opt/dtk:/opt/dtk:ro -e ROCM_SMI_LIB_PATH=/opt/hyhal/lib -e ROCM_PATH=/opt/dtk ...
 ENV HYGON_VISIBLE_DEVICES="all" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/opt/dtk;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/opt/dtk;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
 
 ## Active all Iluvatar devices detection,
 ## works with (default) Iluvatar container runtime and privileged mode.
@@ -666,7 +666,7 @@ ENV HYGON_VISIBLE_DEVICES="all" \
 ENV IX_VISIBLE_DEVICES="all" \
     COREX_HOME="/usr/local/corex" \
     LD_LIBRARY_PATH="/usr/local/corex/lib64:${LD_LIBRARY_PATH}" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/corex;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/corex;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
 
 ## Active all MetaX devices detection,
 ## works with (default) MetaX container runtime and privileged mode.
@@ -680,7 +680,7 @@ ENV IX_VISIBLE_DEVICES="all" \
 ##   + Disallowing privileged, try with:
 ##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock --security-opt seccomp=unconfined -v /dev:/dev:ro -v /opt/mxdriver:/opt/mxdriver:ro -v /opt/maca:/opt/maca:ro ...
 ENV LD_LIBRARY_PATH="/opt/maca/lib:/opt/mxdriver/lib:${LD_LIBRARY_PATH}" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/opt/maca;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/opt/maca;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
 
 ## Active all MThreads devices detection,
 ## works with (default) MThreads container runtime and privileged mode.
@@ -723,33 +723,33 @@ ENV NVIDIA_DISABLE_REQUIRE="true" \
 ##   [TODO, TBD]
 ## - Without container runtime installed:
 ##   + Allowing privileged, try with:
-##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e AISTACK_RUNTIME_DOCKER_RESOURCE_INJECTION_POLICY=CDI -v /var/run/cdi:/var/run/cdi --privileged -v /usr/local/PPU_SDK:/usr/local/PPU_SDK:ro ...
+##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e GPUSTACK_RUNTIME_DOCKER_RESOURCE_INJECTION_POLICY=CDI -v /var/run/cdi:/var/run/cdi --privileged -v /usr/local/PPU_SDK:/usr/local/PPU_SDK:ro ...
 ##   + Disallowing privileged, try with:
-##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e AISTACK_RUNTIME_DOCKER_RESOURCE_INJECTION_POLICY=CDI -v /var/run/cdi:/var/run/cdi --security-opt seccomp=unconfined -v /dev:/dev:ro -v /usr/local/PPU_SDK:/usr/local/PPU_SDK:ro ...
+##     docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e GPUSTACK_RUNTIME_DOCKER_RESOURCE_INJECTION_POLICY=CDI -v /var/run/cdi:/var/run/cdi --security-opt seccomp=unconfined -v /dev:/dev:ro -v /usr/local/PPU_SDK:/usr/local/PPU_SDK:ro ...
 ENV PPU_HOME="/usr/local/PPU_SDK" \
     LD_LIBRARY_PATH="/usr/local/PPU_SDK/CUDA_SDK/lib64:/usr/local/PPU_SDK/lib:${LD_LIBRARY_PATH}" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/PPU_SDK;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/usr/local/PPU_SDK;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}"
 
 ## Active AiStack runtime mirrored deployment mode,
 ## if getting an error like, "Found multiple Containers with the same hostname ...",
-## please use `--env AISTACK_RUNTIME_DEPLOY_MIRRORED_NAME=...` to specify the exact container name.
+## please use `--env GPUSTACK_RUNTIME_DEPLOY_MIRRORED_NAME=...` to specify the exact container name.
 ##
-ARG AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS
+ARG GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS
 
-## AISTACK_RUNTIME_LOG_EXCEPTION=false: Disable logging exceptions from aistack-runtime.
-## AISTACK_RUNTIME_DEPLOY_CDI_SPECS_DIRECTORY=/var/run/cdi: Set CDI specs directory.
-## AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT=true: Enable mirrored deployment mode.
-## AISTACK_RUNTIME_DEPLOY_CORRECT_RUNNER_IMAGE=false: Disable auto correction of runner images.
-## AISTACK_RUNTIME_DOCKER_IMAGE_NO_PULL_VISUALIZATION=true: Disable visualizating image pull progress, instead using simple logs.
-## AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS: Configure filter labels for mirrored deployment.
-## AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES: Declare volumes to be ignored during mirrored deployment.
-ENV AISTACK_RUNTIME_LOG_EXCEPTION="false" \
-    AISTACK_RUNTIME_DEPLOY_CDI_SPECS_DIRECTORY="/var/run/cdi" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT="true" \
-    AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/var/run/cdi;${AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}" \
-    AISTACK_RUNTIME_DEPLOY_CORRECT_RUNNER_IMAGE="false" \
-    AISTACK_RUNTIME_DOCKER_IMAGE_NO_PULL_VISUALIZATION="true" \
-    AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS="${AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS}"
+## GPUSTACK_RUNTIME_LOG_EXCEPTION=false: Disable logging exceptions from aistack-runtime.
+## GPUSTACK_RUNTIME_DEPLOY_CDI_SPECS_DIRECTORY=/var/run/cdi: Set CDI specs directory.
+## GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT=true: Enable mirrored deployment mode.
+## GPUSTACK_RUNTIME_DEPLOY_CORRECT_RUNNER_IMAGE=false: Disable auto correction of runner images.
+## GPUSTACK_RUNTIME_DOCKER_IMAGE_NO_PULL_VISUALIZATION=true: Disable visualizating image pull progress, instead using simple logs.
+## GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS: Configure filter labels for mirrored deployment.
+## GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES: Declare volumes to be ignored during mirrored deployment.
+ENV GPUSTACK_RUNTIME_LOG_EXCEPTION="false" \
+    GPUSTACK_RUNTIME_DEPLOY_CDI_SPECS_DIRECTORY="/var/run/cdi" \
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT="true" \
+    GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES="/var/run/cdi;${GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT_IGNORE_VOLUMES}" \
+    GPUSTACK_RUNTIME_DEPLOY_CORRECT_RUNNER_IMAGE="false" \
+    GPUSTACK_RUNTIME_DOCKER_IMAGE_NO_PULL_VISUALIZATION="true" \
+    GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS="${GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS}"
 
 # Source binary is /usr/bin/gpustack-operator in the upstream image.
 # Rename to aistack-operator on COPY so that server.py's

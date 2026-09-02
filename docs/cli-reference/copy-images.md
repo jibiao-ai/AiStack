@@ -33,6 +33,6 @@ aistack copy-images [OPTIONS]
 | `--source-username`, `--src-user` `SOURCE_USERNAME`                   | (env: `SOURCE_USERNAME`)                                        | Username for source registry authentication                             |
 | `--source-password`, `--src-passwd` `SOURCE_PASSWORD`                 | (env: `SOURCE_PASSWORD`)                                        | Password/Token for source registry authentication                       |
 | `--destination`, `--dest` `DESTINATION`                               | `docker.io` (env: `AISTACK_SYSTEM_DEFAULT_CONTAINER_REGISTRY`) | Destination registry                                                    |
-| `--destination-namespace`, `--dest-namespace` `DESTINATION_NAMESPACE` | (env: `AISTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_NAMESPACE`)    | Destination namespace in the destination registry                       |
+| `--destination-namespace`, `--dest-namespace` `DESTINATION_NAMESPACE` | (env: `GPUSTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_NAMESPACE`)    | Destination namespace in the destination registry                       |
 | `--destination-username`, `--dest-user` `DESTINATION_USERNAME`        | (env: `DESTINATION_USERNAME`)                                   | Username for destination registry authentication                        |
 | `--destination-password`, `--dest-passwd` `DESTINATION_PASSWORD`      | (env: `DESTINATION_PASSWORD`)                                   | Password/Token for destination registry authentication                  |

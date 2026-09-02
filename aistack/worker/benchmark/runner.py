@@ -176,7 +176,7 @@ class BenchmarkRunner:
         deployment_metadata = self._benchmark.get_deployment_metadata()
 
         env = {}
-        if not runtime_envs.AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT:
+        if not runtime_envs.GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT:
             env = filter_env_vars(os.environ)
             self._drop_worker_ca_env(env)
 
@@ -595,7 +595,7 @@ class BenchmarkRunner:
         if (
             self._model_path
             and self._benchmark_dir
-            and not runtime_envs.AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT
+            and not runtime_envs.GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT
         ):
             model_dir = os.path.dirname(self._model_path)
             mounts.extend(

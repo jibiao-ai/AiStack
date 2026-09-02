@@ -28,7 +28,7 @@ write_files:
       echo "$(date): trying to bring up aistack worker container..." >> /var/log/post-reboot.log
 
       docker run -d --name aistack-worker \\
-      -e "AISTACK_RUNTIME_DEPLOY_MIRRORED_NAME=aistack-worker" \\
+      -e "GPUSTACK_RUNTIME_DEPLOY_MIRRORED_NAME=aistack-worker" \\
       --restart=unless-stopped \\
       --privileged \\
       --network=host \\

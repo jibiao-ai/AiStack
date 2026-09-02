@@ -1,7 +1,7 @@
 from typing import Optional, Union
 from gpustack_runtime.envs import (
-    AISTACK_RUNTIME_DOCKER_PAUSE_IMAGE,
-    AISTACK_RUNTIME_DOCKER_UNHEALTHY_RESTART_IMAGE,
+    GPUSTACK_RUNTIME_DOCKER_PAUSE_IMAGE,
+    GPUSTACK_RUNTIME_DOCKER_UNHEALTHY_RESTART_IMAGE,
 )
 from gpustack_runtime.deployer.docker import DockerWorkloadPlan
 from gpustack_runtime.deployer import WorkloadPlan, DockerDeployer, WorkloadStatus
@@ -23,10 +23,10 @@ def transform_workload_plan(
     if not DockerDeployer().is_supported():
         return workload
     pause_image = apply_registry_override_to_image(
-        config, AISTACK_RUNTIME_DOCKER_PAUSE_IMAGE, fallback_registry
+        config, GPUSTACK_RUNTIME_DOCKER_PAUSE_IMAGE, fallback_registry
     )
     restart_image = apply_registry_override_to_image(
-        config, AISTACK_RUNTIME_DOCKER_UNHEALTHY_RESTART_IMAGE, fallback_registry
+        config, GPUSTACK_RUNTIME_DOCKER_UNHEALTHY_RESTART_IMAGE, fallback_registry
     )
     docker_workload = DockerWorkloadPlan(
         pause_image=pause_image,

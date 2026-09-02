@@ -459,7 +459,7 @@ class InferenceServer(ABC):
         """
 
         env = {}
-        if not runtime_envs.AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT:
+        if not runtime_envs.GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT:
             env = filter_env_vars(os.environ)
 
         if self._model.env:
@@ -617,7 +617,7 @@ class InferenceServer(ABC):
                     raise RuntimeError(
                         "All GPUs assigned to the model instance must be of the same type."
                     )
-            key = runtime_envs.AISTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY.get(
+            key = runtime_envs.GPUSTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY.get(
                 gpu_type
             )
             if key:
@@ -690,12 +690,12 @@ class InferenceServer(ABC):
         if gpu_type is None:
             gpu_type, _, _ = self._get_device_info()
         device_key = (
-            runtime_envs.AISTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY.get(gpu_type)
+            runtime_envs.GPUSTACK_RUNTIME_DETECT_BACKEND_MAP_RESOURCE_KEY.get(gpu_type)
             if gpu_type
             else None
         )
         base = (
-            runtime_envs.AISTACK_RUNTIME_DEPLOY_RESOURCE_KEY_MAP_CDI.get(device_key)
+            runtime_envs.GPUSTACK_RUNTIME_DEPLOY_RESOURCE_KEY_MAP_CDI.get(device_key)
             if device_key
             else None
         )
@@ -718,7 +718,7 @@ class InferenceServer(ABC):
         mounts: List[ContainerMount] = []
         if (
             self._model_path
-            and not runtime_envs.AISTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT
+            and not runtime_envs.GPUSTACK_RUNTIME_DEPLOY_MIRRORED_DEPLOYMENT
         ):
             model_dir = os.path.dirname(self._model_path)
             mounts.append(

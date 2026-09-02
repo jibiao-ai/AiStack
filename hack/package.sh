@@ -72,7 +72,7 @@ function pack() {
         --shm-size 16G \
         --progress plain \
         --build-arg "UPSTREAM_NS=${UPSTREAM_NS}" \
-        --build-arg "AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS=$(printf "%s;" "${LABELS[@]}")" \
+        --build-arg "GPUSTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS=$(printf "%s;" "${LABELS[@]}")" \
         --build-arg "UI_DOWNLOAD=${PACKAGE_UI_DOWNLOAD}" \
         "${EXTRA_ARGS[@]}" \
         "${ROOT_DIR}"

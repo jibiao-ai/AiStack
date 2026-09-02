@@ -157,8 +157,8 @@ set the following environment variables when starting the AiStack worker to allo
 ```diff
  sudo docker run -d --name aistack \
      ...
-+    --env AISTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_REGISTRY_USERNAME=<your_internal_registry_username> \
-+    --env AISTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_REGISTRY_PASSWORD=<your_internal_registry_password> \
++    --env GPUSTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_REGISTRY_USERNAME=<your_internal_registry_username> \
++    --env GPUSTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_REGISTRY_PASSWORD=<your_internal_registry_password> \
      <your_internal_registry>/aistack/aistack \
      --system-default-container-registry <your_internal_registry>
 
@@ -172,7 +172,7 @@ set the following environment variable when starting the AiStack worker to allow
 ```diff
  sudo docker run -d --name aistack \
      ...
-+    --env AISTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_NAMESPACE=<your_namespace> \
++    --env GPUSTACK_RUNTIME_DEPLOY_DEFAULT_CONTAINER_NAMESPACE=<your_namespace> \
      <your_internal_registry>/aistack/aistack \
      --system-default-container-registry <your_internal_registry>
 ```

@@ -56,7 +56,7 @@ docker pull "$NEW_IMAGE"
 docker rm -f aistack-worker
 
 docker run -d --name aistack-worker \
-  -e "AISTACK_RUNTIME_DEPLOY_MIRRORED_NAME=aistack-worker" \
+  -e "GPUSTACK_RUNTIME_DEPLOY_MIRRORED_NAME=aistack-worker" \
   --restart=unless-stopped \
   --privileged \
   --network=host \
