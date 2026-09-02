@@ -751,7 +751,10 @@ ENV AISTACK_RUNTIME_LOG_EXCEPTION="false" \
     AISTACK_RUNTIME_DOCKER_IMAGE_NO_PULL_VISUALIZATION="true" \
     AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS="${AISTACK_RUNTIME_DOCKER_MIRRORED_NAME_FILTER_LABELS}"
 
-COPY --from=aistack-operator /usr/bin/aistack-operator /usr/bin/aistack-operator
+# Source binary is /usr/bin/gpustack-operator in the upstream image.
+# Rename to aistack-operator on COPY so that server.py's
+#   shutil.which("aistack-operator") finds it at runtime.
+COPY --from=aistack-operator /usr/bin/gpustack-operator /usr/bin/aistack-operator
 COPY --chmod=755 pack/entrypoint.sh /usr/bin/entrypoint.sh
 
 ## KUBE_FEATURE_WatchListClient=false: Disable WatchListClient to avoid potential issues with Kubernetes API server versions that do not support it.

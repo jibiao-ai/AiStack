@@ -44,10 +44,12 @@ function pack() {
             --bootstrap
     fi
 
-    LABELS=("org.opencontainers.image.source=https://github.com/aistack/aistack" "org.opencontainers.image.version=main" "org.opencontainers.image.revision=$(git rev-parse HEAD 2>/dev/null || echo "unknown")" "org.opencontainers.image.created=$(date +"%Y-%m-%dT%H:%M:%S.%s")");
+    LABELS=("org.opencontainers.image.source=https://github.com/jibiao-ai/AiStack" "org.opencontainers.image.version=main" "org.opencontainers.image.revision=$(git rev-parse HEAD 2>/dev/null || echo "unknown")" "org.opencontainers.image.created=$(date +"%Y-%m-%dT%H:%M:%S.%s")");
     TAG="${PACKAGE_NAMESPACE}/${PACKAGE_REPOSITORY}:${PACKAGE_TAG}"
     EXTRA_ARGS=()
 	if [[ "${PACKAGE_WITH_CACHE}" == "true" ]]; then
+		# NOTE: The upstream GPUStack build cache may not be accessible for self-hosted builds.
+		# Replace with your own cache registry or remove this line if not using remote caching.
 		EXTRA_ARGS+=("--cache-from=type=registry,ref=gpustack/build-cache:gpustack-main")
 	fi
 	if [[ "${PACKAGE_PUSH}" == "true" ]]; then

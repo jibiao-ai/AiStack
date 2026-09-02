@@ -191,7 +191,7 @@ if [[ "${USE_BUILDX}" == "true" ]]; then
         --build-arg "UPSTREAM_NS=${UPSTREAM_NS}" \
         --build-arg "UI_DOWNLOAD=true" \
         "${EXTRA_ARGS[@]}" \
-        ${BUILDX_OUTPUT} \
+        "${BUILDX_OUTPUT}" \
         "${ROOT_DIR}"
     set +x
 else
